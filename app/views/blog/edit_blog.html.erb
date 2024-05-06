@@ -1,0 +1,36 @@
+<%= render "shared/navbar" %>
+<div id="error-message" style="position: relative; top:5rem; left:12%; background:#ffa7a7; padding:14px; width: fit-content; border-radius: 6px; font-weight:bold; display: none; z-index:99;">
+  </div>
+  <script>
+    <%if @err%>
+      document.getElementById("error-message").innerText = "<%= @err %>";
+      document.getElementById("error-message").style.display = "block";
+      setTimeout(function() {
+        document.getElementById("error-message").style.display = "none";
+      }, 2000); 
+    <%end%>
+</script>
+<div class="edit-blog-container">
+  
+  <div class="form-container add-blog edit-blog">
+    <h1>Edit Your BLOG</h1>
+  <%= form_for @blog, url: update_blog_path(@blog.id), method: :put do |f| %>
+    <div class="field">
+      <%= f.text_field :title, placeholder: "Description" %>
+    </div>
+
+    <div class="field">
+      <%= f.text_area :description, placeholder: "Description"%>
+    </div>
+
+    <div class="field">
+      <%= f.file_field :image %>
+    </div>
+
+    <div class="actions btn">
+      <%= f.submit "Edit Blog" %>
+    </div>
+  <% end %>
+</div>
+</div>
+

@@ -1,0 +1,41 @@
+<%= render "shared/navbar"%>
+<div class="blog-container">
+    <div class="blog">
+        <div class="image-container">
+            <%= image_tag url_for(@blog.image) if @blog.image.attached? %>
+        </div>
+        <div class="blog-content">
+            <h2><%= @blog.title %></h2>
+            <p><%= @blog.description %></p>
+        </div>
+    </div>
+</div>
+<% if @comments %>
+  <%= render 'comments/comments', blog: @blog, comment: @comment %>
+<% end %>
+<% if current_user %>
+  <%= render 'comments/form', blog: @blog, comment: @comment %>
+ <%= display_field_error(@comment, :content) %>
+<% end %>
+  
+<script>
+  function toggleReplyForm(commentId) {
+    let replyForm = document.getElementById("reply-form-" + commentId);
+    let parentIdInput = replyForm.querySelector('#comment_parent_id');
+    parentIdInput.value = commentId;  
+    replyForm.style.display = (replyForm.style.display === 'none' || replyForm.style.display === '') ? 'block' : 'none';
+  }
+
+  function toggleReplies(commentId) {
+    let replyContainer = document.getElementById("reply-container-" + commentId);
+    replyContainer.style.display = (replyContainer.style.display === 'none' || replyContainer.style.display === '') ? 'block' : 'none';
+  }
+
+
+  function renderComment(commentId){
+    console.log(commentId)
+    let comment = document.querySelector(`#all-comment-${commentId}`)
+    console.log(comment)
+    comment.remove()
+  }
+</script>

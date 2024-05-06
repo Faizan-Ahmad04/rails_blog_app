@@ -1,0 +1,17 @@
+<%= render "shared/navbar"%>
+<div class="card-container">
+  <% if @blogs %>
+    <% @blogs.each do |blog| %>
+      <div class="card">
+        <div class="card-img">
+          <%= image_tag url_for(blog.image) if blog.image.attached? %>
+        </div>
+        <div class="card-content">
+          <h2><%= blog.title %></h2>
+          <p><%= truncate(blog.description, length: 200, separator: ' ') %></p>
+          <%= link_to "Read More",blog_path(blog.id)%>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div

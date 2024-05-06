@@ -1,0 +1,31 @@
+<%= render "shared/navbar"%>
+<div id="error-message" style="position: relative; top:6rem; left:12%; background:#ffa7a7; padding:14px; width: fit-content; border-radius: 6px; font-weight:bold; display: none; z-index:99;">
+  </div>
+  <script>
+    <%if @err%>
+      document.getElementById("error-message").innerText = "<%= @err %>";
+      document.getElementById("error-message").style.display = "block";
+      setTimeout(function() {
+        document.getElementById("error-message").style.display = "none";
+      }, 2000); 
+    <%end%>
+</script>
+<div class="container">
+  <div class="form-container add-blog">
+    <h1>CREATE BLOG</h1>
+    <%= form_tag({ controller: "blog", action: "create_blog" }, multipart: true) do %>
+        <div class="field">
+            <%= text_field_tag 'title', nil, placeholder: "Enter title" %>
+        </div>
+        <div class="field">
+            <%= text_area_tag 'description', nil, placeholder: "Enter description" %>
+        </div>
+        <div class="field">
+            <%= file_field_tag 'image' %>
+        </div>
+        <div class="actions btn">
+        <%= submit_tag "Upload File" %>
+     </div>
+    <% end %>
+ </div>
+</div>

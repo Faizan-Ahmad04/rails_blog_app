@@ -1,0 +1,24 @@
+<!-- app/views/shared/_navbar.html.erb -->
+
+<nav class='cont text-[#764abc] uppercase max-w-[84%] mx-auto px-4 sm:px-6 lg:px-4 fixed top-0 left-0 right-0 w-full bg-[#f8f9fb] z- rounded-b-[12px] z-20'>
+  <ul class='flex justify-between items-center p-0.5 text-[16px] font-bold'>
+    <div class="nav-link-item flex items-center gap-8">
+      <li class='text-3xl p-[10px]'><%= link_to 'Blogify', root_path %></li>
+       <% if current_user %>
+          <li class='p-[10px]'><%= link_to 'Add Blog', add_blog_path %></li>
+          <li class='p-[10px]'><%= link_to "#{current_user.name}", root_path %></li>
+          <li class='p-[10px]'><%= link_to 'Your Blog', user_blog_path%></li>
+        <% end %>
+    </div>
+    <div class="nav-btn">
+      <% if current_user %>
+        <%= button_to 'Sign Out', destroy_user_session_path, method: :delete%>
+      <% end %>
+
+      <%if !current_user%>
+        <%= link_to 'SIGN IN', new_user_session_path %>
+      <%= link_to 'SIGN UP', new_user_registration_path, class: 'ml-[30px]' %>
+      <%end%>
+    </div>
+  </ul>
+</nav>

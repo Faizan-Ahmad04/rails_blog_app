@@ -1,0 +1,78 @@
+<%= render "shared/navbar"%>
+<!--<div id="error-message" style="position: relative; top:4rem;  background:#ffa7a7; padding:14px; width: fit-content; border-radius: 6px; font-weight:bold; display: none; z-index:99;">
+  </div>
+  <script>
+    <%if @err%>
+      document.getElementById("error-message").innerText = "<%= @err %>";
+      document.getElementById("error-message").style.display = "block";
+      setTimeout(function() {
+        document.getElementById("error-message").style.display = "none";
+      }, 2000); 
+    <%end%>
+</script>-->
+<div class="container">
+  <div class="form-container <%='form-border-error' if @err%>">
+    <h2>Sign up</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field <%= 'has-error' if @user.errors.include?(:name) %>">
+        <%= f.text_field :name, autofocus: true, placeholder: "Your Name" %>
+      </div>
+      <% if @user.errors.include?(:name)%>
+        <div style="width: 85%; margin-top: -20px; margin-bottom: -20px" class="error">
+          <%= display_field_error(@user, :name) %>
+        </div>
+      <%end%>
+
+      <div class="field <%= 'has-error' if @user.errors.include?(:email) %>">
+        <%= f.email_field :email, autocomplete: "email", placeholder: "Your Email" %>
+      </div>
+      <%if @user.errors.include?(:email)%>
+        <div style="width: 85%; margin-top: -20px; margin-bottom: -21px" class="error">
+          <%= display_field_error(@user, :email) %> 
+        </div>
+      <%end%>
+
+      <div class="field <%= 'has-error' if @user.errors.include?(:password) %>">
+        <%= f.password_field :password, autocomplete: "new-password", placeholder: "Your Password" %>
+      </div>
+      <% if @user.errors.include?(:password) %>
+        <div style="width: 85%; margin-top: -20px; margin-bottom: -21px" class="error">
+          <%= display_field_error(@user, :password) %>
+        </div>
+      <%end%>
+
+      <div class="field">
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm Password" %>
+      </div>
+
+      <div class="actions btn">
+        <%= f.submit "Sign up" %>
+      </div>
+
+      <div class="navigate">
+        Already have an account?
+        <%= link_to "Login", new_session_path(resource_name), style: 'color: blue' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      let error = document.querySelectorAll('.error');
+     document.querySelector('.form-border-error')?.classList.remove('form-border-error');
+     let borderError = document.querySelectorAll('.has-error');
+      error.forEach(err => {
+        err.style.display="none";
+      });
+      borderError.forEach(border => {
+        border.classList.remove('has-error')
+      });
+    }, 3000);
+  });
+</script>
+
+<%# <%= render "devise/shared/links" %>

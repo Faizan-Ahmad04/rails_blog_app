@@ -1,0 +1,37 @@
+    <% @comments.each do |comment| %>
+<div id = "all-comment-<%= comment.id %>">
+        <div class="comment-container">
+        <div class="comment">
+            <% if !comment.parent_id %>
+            <div style="padding:10px; margin-bottom: -30px;">
+                <h5><%= comment.user_name %></h5>
+                <p><%= comment.content %></p>
+            </div>
+            <div id="reply-container-<%= comment.id %>" style=" padding:10px; display: none;">
+                <%= render partial: 'comments/replies', locals: { comment: comment, parent_id: comment.id } %>
+            </div>
+            <div style="display:flex; gap:11px; ">
+                <% if current_user && current_user.id == comment.user_id %>
+                <!--<%= button_to 'Delete', blog_comment_path(@blog, comment), method: :delete, data: { confirm: 'Are you sure?'}, class: 'btn btn-danger' %>-->
+                 <button class="btn btn-danger" id="delte-comment" onclick="renderComment('<%= comment.id %>')">
+                    Delete 
+                </button>
+                
+                <% end %>
+                <% if current_user %>
+                <button class="toggle-reply-form btn" onclick="toggleReplyForm('<%= comment.id %>')">
+                    Reply
+                </button>
+                <button class="toggle-replies btn" onclick="toggleReplies('<%= comment.id %>')">
+                    See All Replies
+                </button>
+                <% end %>
+            </div>
+            <% end %>
+            <div class="reply-form" id="reply-form-<%= comment.id %>" style="display: none;">
+            <%= render 'comments/form', blog: @blog, parent_id: comment.id %>
+            </div>
+        </div>
+        </div>
+  </div>
+    <% end %>

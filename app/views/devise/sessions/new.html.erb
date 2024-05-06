@@ -1,0 +1,76 @@
+<!-- app/views/devise/sessions/new.html.erb -->
+
+<!--<div id="error-message" style="position: relative; top:6rem; left:12%; background:#ffa7a7; padding:14px; width: fit-content; border-radius: 6px; font-weight:bold; display: none; z-index:99;"></div>
+  <% if flash[:alert] %>
+      <script>
+        document.getElementById("error-message").innerText = "Please enter valid credentials. Try again.";
+        document.getElementById("error-message").style.display = "block";
+        setTimeout(function() {
+          document.getElementById("error-message").style.display = "none";
+        }, 2000); 
+      </script>
+    <% end %>-->
+<!-- app/views/devise/sessions/new.html.erb -->
+<%= render "shared/navbar"%>
+
+<div class="container">
+  <div class="form-container loginForm <%= 'form-border-error' if flash[:alert] %>">
+    <h2>Log in</h2>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field <%= 'has-error' if flash[:alert] %>">
+        <%= f.text_field :email, autofocus: true, autocomplete: "email", placeholder: "Your Email or User name" %>
+      </div>
+      <% if flash[:alert] %>
+        <div style="width: 85%; margin-top: -30px; margin-bottom: -19px" id="email-error-message">
+          <p style="color:red;">Invalid credentials</p> 
+        </div>
+      <% end %>
+
+      <div class="field <%= 'has-error' if flash[:alert] %>">
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "Your Password" %>
+      </div>
+      <% if flash[:alert] %>
+        <div style="width: 85%; margin-top: -30px; margin-bottom: -21px" id="password-error-message">
+          <p style="color:red;">Invalid credentials</p> 
+        </div>
+      <% end %>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+      <% end %>
+
+      <div class="actions btn">
+        <%= f.submit "Log in" %>
+      </div>
+      <div class="navigate">
+        Not a Member?
+        <%= link_to "Signup", new_registration_path(resource_name), style: 'color: blue' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      let emailErrorMessage = document.getElementById('email-error-message');
+      let passwordErrorMessage = document.getElementById('password-error-message');
+      document.querySelector(".form-border-error")?.classList.remove('form-border-error')
+      let inputError = document.querySelectorAll(".has-error")
+      inputError.forEach(element => {
+        element.classList.remove('has-error')
+      });
+
+      if (emailErrorMessage) {
+        emailErrorMessage.style.display = 'none';
+      }
+      
+      if (passwordErrorMessage) {
+        passwordErrorMessage.style.display = 'none';
+      }
+    }, 3000);
+  });
+</script>

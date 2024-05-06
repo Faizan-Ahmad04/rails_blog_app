@@ -1,0 +1,11 @@
+<div class="comment-input">
+  <%= form_for [@blog, @comment] do |f| %>
+    <div class="comment-text">
+      <%= f.text_field :content, placeholder: "Add Comment" %>
+    </div>
+    <%= f.hidden_field :parent_id, id: "comment_parent_id" %>
+    <div class="comment-btn">
+      <%= f.submit "Add Comment" %>
+    </div>
+  <% end %>
+</div>

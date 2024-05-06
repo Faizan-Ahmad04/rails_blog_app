@@ -1,0 +1,25 @@
+<% comment.replies.where(parent_id: parent_id).each do |reply| %>
+  <div class="reply" style="margin-left: 30px;">
+    <h6><%= reply.user_name %></h6>
+    <p><%= reply.content %></p>
+    <div class="btn-div">
+      <% if current_user && current_user.id == reply.user_id %>
+        <%= button_to 'Delete', blog_comment_path(@blog, reply), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn'%>
+      <% end %>
+      <% if current_user %>
+        <button class="toggle-reply-form btn" onclick="toggleReplyForm('<%= reply.id %>')">
+          Reply
+        </button>
+      <% end %>
+    </div>
+    <div class="reply-form" id="reply-form-<%= reply.id %>" style="display: none;">
+      <%= render 'comments/form', blog: @blog, parent_id: reply.id %>
+    </div>
+
+    <!-- Recursive Rendering - render replies within the loop -->
+    <%= render partial: 'comments/replies', locals: { comment: reply, parent_id: reply.id } %>
+  </div>
+<% end %>
+
+
+

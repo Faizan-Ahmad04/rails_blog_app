@@ -1,0 +1,29 @@
+
+<%= render "shared/navbar"%>
+<div class="card-container">
+  <% if @blogs.present? && @blogs.any? %>
+    <% @blogs.each do |blog| %>
+      <div class="card">
+        <div class="card-img">
+          <%= image_tag url_for(blog.image) if blog.image.attached? %>
+        </div>
+        <div class="card-content">
+          <h2><%= blog.title %></h2>
+          <p><%= truncate(blog.description, length: 200, separator: ' ') %></p>
+          <div class="delete">
+            <%= link_to "Read More", blog_path(blog.id) %>
+            <% if current_user && current_user.id == blog.user_id %>
+              <%= button_to "Delete", destroy_blog_path(blog.id), method: :delete%>
+              <%= button_to "Edit", edit_blog_path(blog.id), method: :get %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% else %>
+      <div class="create-blog ">
+        <h1>Please create a blog</h1>
+        <p class='p-[10px] nav-btn'><%= link_to 'Add Blog', add_blog_path %></p>
+      </div>
+  <% end %>
+</div>
